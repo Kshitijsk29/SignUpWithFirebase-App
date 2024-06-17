@@ -56,11 +56,11 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnSignUp"
+        android:id="@+id/btnSignIn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="Sign Up"
+        android:text="Sign In"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:shadowRadius="20"
@@ -80,9 +80,9 @@
         android:textSize="17dp"
         android:textStyle="bold"
         android:text="Register Here ?"
-        app:layout_constraintStart_toStartOf="@id/btnSignUp"
-        app:layout_constraintEnd_toEndOf="@id/btnSignUp"
-        app:layout_constraintTop_toBottomOf="@id/btnSignUp"/>
+        app:layout_constraintStart_toStartOf="@id/btnSignIn"
+        app:layout_constraintEnd_toEndOf="@id/btnSignIn"
+        app:layout_constraintTop_toBottomOf="@id/btnSignIn"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

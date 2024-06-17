@@ -9,6 +9,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.database
 import com.nextin.signupwithfirebaseapp.databinding.ActivitySignUpBinding
 
 class SignUpActivity : AppCompatActivity() {
@@ -23,6 +25,7 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
+        val database = Firebase.database
 
         binding.alreadyHaveAccount.setOnClickListener {
             startActivity(Intent(this ,LoginActivity::class.java))
@@ -47,13 +50,19 @@ class SignUpActivity : AppCompatActivity() {
                 }
             else
             {
-                auth.signInWithEmailAndPassword(email, password)
+                auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) {
                         task ->
                         if (task.isSuccessful){
+                            val user =Users(username,email,password,repeatedPassword)
+
+                                database.reference.child("Users").child(email).setValue(user)
+
+
                             Toast.makeText(this,"Registration Successful ",
                                 Toast.LENGTH_SHORT).show()
                             startActivity(Intent(this, LoginActivity::class.java))
+                            finish()
                         }
                         else
                         {
@@ -61,6 +70,12 @@ class SignUpActivity : AppCompatActivity() {
                                 Toast.LENGTH_SHORT).show()
                         }
                     }
+                    .addOnFailureListener{
+                    task ->
+                Toast.makeText(this,
+                    "The Error is : ${task.message}"
+                    ,Toast.LENGTH_SHORT).show()
+            }
             }
         }
     }

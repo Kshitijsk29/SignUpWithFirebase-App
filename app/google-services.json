@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "20438044997",
+    "project_id": "signupwithfirebase-app",
+    "storage_bucket": "signupwithfirebase-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:20438044997:android:071c03b6974a4e3e6a6e2c",
+        "android_client_info": {
+          "package_name": "com.nextin.signupwithfirebaseapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjj_wXUVyGe3lrF8Z0-hvj7Z4JcmCxwQ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

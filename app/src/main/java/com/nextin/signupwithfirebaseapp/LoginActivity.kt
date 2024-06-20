@@ -9,13 +9,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.nextin.signupwithfirebaseapp.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
     private val binding :ActivityLoginBinding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
     }
+    companion object{
+        const val  KEY1 = "com.nextin.signupwithfirebaseapp.LoginActivity.name"
+        const val  KEY2 = "com.nextin.signupwithfirebaseapp.LoginActivity.email"
+    }
 
+     lateinit var database : DatabaseReference
     lateinit var  auth :FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +45,14 @@ class LoginActivity : AppCompatActivity() {
             {
                 auth.signInWithEmailAndPassword(email,password).addOnCompleteListener{
                     task ->
+
                     if (task.isSuccessful)
                     {
+                        val id = task.result.user?.uid
+                        if (id!= null){
+                            readTheDataFromFirebase(id!!)
+                        }
+
                         Toast.makeText(this,
                             "Login is Successful",
                             Toast.LENGTH_SHORT).show()
@@ -60,5 +73,29 @@ class LoginActivity : AppCompatActivity() {
                     }
             }
         }
+    }
+
+    private fun readTheDataFromFirebase(id: String) {
+        database = FirebaseDatabase.getInstance().getReference("Users")
+        database.child(id).get().addOnSuccessListener {
+            if(it.exists()){
+                val name = it.child("uname").value
+                val email = it.child("email").value
+
+                val welcomeIntent = Intent(this,MainActivity::class.java)
+                welcomeIntent.putExtra(KEY1,name.toString())
+                welcomeIntent.putExtra(KEY2,email.toString())
+                startActivity(welcomeIntent)
+            }else
+            {
+                Toast.makeText(this,"User Does Not Exits"
+                    ,Toast.LENGTH_SHORT).show()
+            }
+        }
+            .addOnFailureListener{
+                Toast.makeText(this,
+                    "Error : - ${it.localizedMessage}",
+                    Toast.LENGTH_SHORT).show()
+            }
     }
 }

@@ -43,6 +43,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Email"
+        android:inputType="textEmailAddress"
         android:textSize="20sp"
         android:focusable="true"
         android:layout_marginTop="10dp"

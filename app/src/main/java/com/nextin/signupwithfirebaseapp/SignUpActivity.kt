@@ -56,8 +56,10 @@ class SignUpActivity : AppCompatActivity() {
                         if (task.isSuccessful){
                             val user =Users(username,email,password,repeatedPassword)
 
-                                database.reference.child("Users").child(email).setValue(user)
-
+                            val id = task.result.user?.uid
+                            if (id != null){
+                                database.reference.child("Users").child(id).setValue(user)
+                            }
 
                             Toast.makeText(this,"Registration Successful ",
                                 Toast.LENGTH_SHORT).show()
